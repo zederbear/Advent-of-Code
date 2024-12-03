@@ -1,70 +1,70 @@
 package main
 
 import (
-    "fmt"
-    // "bufio"
-    "os"
-    "io"
-    // "strings"
-    "strconv"
-    "regexp"
-    "log"
+	"fmt"
+	// "bufio"
+	"io"
+	"os"
+
+	// "strings"
+	"log"
+	"regexp"
+	"strconv"
 )
 
-
 func main() {
-    file, err := os.Open("realdata.txt")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
-    
-    data, err := io.ReadAll(file)
-    if err != nil {
-        log.Fatal(err)
-    }
+	file, err := os.Open("testdata.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
-    text := string(data)
+	data, err := io.ReadAll(file)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    mulPattern := `mul\((\d+),(\d+)\)`
-    dontPattern := `don't\(\)`
-    doPattern := `do\(\)`
+	text := string(data)
 
-    pattern := fmt.Sprintf("%s|%s|%s", mulPattern, dontPattern, doPattern)
+	mulPattern := `mul\((\d+),(\d+)\)`
+	dontPattern := `don't\(\)`
+	doPattern := `do\(\)`
 
-    re := regexp.MustCompile(pattern)
-    
-    matches := re.FindAllStringSubmatch(text, -1)
-    fmt.Println(matches)
+	pattern := fmt.Sprintf("%s|%s|%s", mulPattern, dontPattern, doPattern)
 
-    do := true
-    
-    var trueMatches [][]string
+	re := regexp.MustCompile(pattern)
 
-    for _, val := range matches {
-        if val[0] == "do()" {
-            do = true
-        } else if val[0] == "don't()" {
-            do = false
-        } else if do {
-            trueMatches = append(trueMatches, val)
-        }
-    }
+	matches := re.FindAllStringSubmatch(text, -1)
+	fmt.Println(matches)
 
-    fmt.Println(trueMatches)
+	do := true
 
-    var total int
-    for _, pair := range trueMatches {
-        num1, err1 := strconv.Atoi(pair[1])
-        num2, err2 := strconv.Atoi(pair[2])
+	var trueMatches [][]string
 
-        if err1 != nil || err2 != nil {
-            log.Fatal(err1, err2)
-        }
+	for _, val := range matches {
+		if val[0] == "do()" {
+			do = true
+		} else if val[0] == "don't()" {
+			do = false
+		} else if do {
+			trueMatches = append(trueMatches, val)
+		}
+	}
 
-        total += num1 * num2
-    }
-    
-    fmt.Println("Total: ")
-    fmt.Println(total)
+	fmt.Println(trueMatches)
+
+	var total int
+	for _, pair := range trueMatches {
+		num1, err1 := strconv.Atoi(pair[1])
+		num2, err2 := strconv.Atoi(pair[2])
+
+		if err1 != nil || err2 != nil {
+			log.Fatal(err1, err2)
+		}
+
+		total += num1 * num2
+	}
+
+	fmt.Println("Total: ")
+	fmt.Println(total)
 }

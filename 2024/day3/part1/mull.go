@@ -1,69 +1,69 @@
 package main
 
 import (
-    "fmt"
-    // "bufio"
-    "os"
-    "io"
-    // "strings"
-    "strconv"
-    "regexp"
-    "log"
+	"fmt"
+	// "bufio"
+	"io"
+	"os"
+
+	// "strings"
+	"log"
+	"regexp"
+	"strconv"
 )
 
-
 func main() {
-    file, err := os.Open("realdata.txt")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
-    
-    data, err := io.ReadAll(file)
-    if err != nil {
-        log.Fatal(err)
-    }
+	file, err := os.Open("testdata.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
-    text := string(data)
+	data, err := io.ReadAll(file)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    pattern := `mul\((\d+),(\d+)\)`
+	text := string(data)
 
-    re := regexp.MustCompile(pattern)
+	pattern := `mul\((\d+),(\d+)\)`
 
-    matches := re.FindAllStringSubmatch(text, -1)
+	re := regexp.MustCompile(pattern)
 
-    fmt.Println("Matches found: ")
+	matches := re.FindAllStringSubmatch(text, -1)
 
-    for _, match := range matches {
-        fmt.Println(match)
-    }
+	fmt.Println("Matches found: ")
 
-    var result [][]int
+	for _, match := range matches {
+		fmt.Println(match)
+	}
 
-    for _, match := range matches {
-        if len(match) == 3 {
-            num1, err1 := strconv.Atoi(match[1])
-            num2, err2 := strconv.Atoi(match[2])
+	var result [][]int
 
-            if err1 != nil || err2 != nil {
-                log.Fatal(err1, err2)
-            }
+	for _, match := range matches {
+		if len(match) == 3 {
+			num1, err1 := strconv.Atoi(match[1])
+			num2, err2 := strconv.Atoi(match[2])
 
-            result = append(result, []int{num1, num2})
-        }
-    }
-    
-    fmt.Println("Extracted numbers:")
-    for _, pair := range result {
-        fmt.Println(pair)
-    }
+			if err1 != nil || err2 != nil {
+				log.Fatal(err1, err2)
+			}
 
-    var total int
-    for _, pair := range result {
-        total += pair[0] * pair[1]
-    }
-    
-    fmt.Println("Total: ")
-    fmt.Println(total)
+			result = append(result, []int{num1, num2})
+		}
+	}
+
+	fmt.Println("Extracted numbers:")
+	for _, pair := range result {
+		fmt.Println(pair)
+	}
+
+	var total int
+	for _, pair := range result {
+		total += pair[0] * pair[1]
+	}
+
+	fmt.Println("Total: ")
+	fmt.Println(total)
 
 }
