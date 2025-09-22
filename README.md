@@ -18,3 +18,6 @@ I successfully completed Days 1-5 independently, with later Days being a guided 
 - Advent of Code was a chance to practice coding skills under time pressure of beating my classmates in our class Leaderboard
 - I strengthened my debugging skills and the ability to read and apply Documentation
 - Even though I relied on using AI for later problems, I got exposed to more advanced Go patterns and syntax than I would have alone
+***
+## Updates on later Days (16+)
+Eventually I realized that the complexity of the problems outpaced both my own skill in Go and algorithms in general as well as chatGPT's skill unguided by the user, which I did not have enough skill at that point to give chatGPT any extra guidance. At that point I decided to shift my approach, I gave each new puzzle a one time attempt, focusing on what I could learn from the process, and moved on rather than relying on AI to tell me the correct answer.
